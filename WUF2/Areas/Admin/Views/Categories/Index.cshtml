@@ -1,0 +1,47 @@
+﻿@model List<WUF2.Models.Categories>
+
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>Kateqoriyalar</h2>
+        <a asp-area="Admin" asp-controller="Categories" asp-action="Create" class="btn btn-primary">Yeni Kateqoriya Yarat</a>
+    </div>
+
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Kateqoriya Adı</th>
+                <th style="width: 200px;">Əməliyyatlar</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Any())
+            {
+                int count = 1;
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@count</td>
+                        <td>@item.Name</td>
+                        <td>
+                            <div class="d-flex gap-2">
+                                <a asp-area="Admin" asp-controller="Categories" asp-action="Update" asp-route-id="@item.Id" class="btn btn-warning btn-sm">Yenilə</a>
+                                
+                                <form asp-area="Admin" asp-controller="Categories" asp-action="Delete" asp-route-id="@item.Id" method="post" onsubmit="return confirm('Bu kateqoriyanı silmək istədiyinizdən əminsiniz?')">
+                                    <button type="submit" class="btn btn-danger btn-sm">Sil</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    count++;
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="3" class="text-center text-muted">Heç bir kateqoriya tapılmadı.</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
